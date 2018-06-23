@@ -1,7 +1,8 @@
 <?php
 namespace app\index\controller;
 use think\Controller;
-class ShopCart extends Controller
+use think\Db;
+class Shopcart extends Controller
 {
     public function index()
     {
@@ -11,37 +12,181 @@ class ShopCart extends Controller
     //清空购物车
     public function clearShopCart()
     {
-        
+        //从session中获取userid
+        $userid = 2;
+        $result = Db::name('cart')
+        ->where('userid',$userid)
+        ->delete();
+        //返回删除的行数
+        return $result;
     }
 
     //根据商品id从购物车移除商品
     public function removeById()
     {
+        //从session中获取userid
+        $userid = 1;
+        
+        $cartid = $_GET['cartid'];
+        $result = Db::name('cart')
+        ->where('cartid',$cartid)
+        ->delete();
 
+        if($result){
+            //查询商品总价
+            $total = Db::table('shop_cart')
+            ->alias('c')
+            ->join('shop_goodsinfo g','c.goodsid = g.goodsid')
+            ->where('c.userid ='.$userid)
+            ->field('sum(c.num*g.price) as total')
+            ->select();
+
+            $result = json(['total'=>$total[0]['total']]);
+        }
+        
+        return $result;
     }
 
     //修改商品数量
     public function modifyNumber()
     {
+        //接受用户id
+        $userid = 1;
+        //接受购物车的cartid
+        $cartid = $_GET['cartid'];
+        //获取加入购物车的商品数量
+        $num = $_GET['num'];
+
+        // return $cartid.$num;
+
+        //检查cartid是否在购物车表中存在
+        $result = Db::name('cart')
+        ->where('cartid',$cartid)
+        ->update(['num'=>$num]);
+
+        //查询商品价格
+        $price = Db::name('cart')
+        ->alias('c')
+        ->join('goodsinfo g','c.goodsid=g.goodsid')
+        ->where('c.cartid',$cartid)
+        ->field('g.price')
+        ->find();
+
+                //计算用户购物总价
+        $total = Db::table('shop_cart')
+        ->alias('c')
+        ->join('shop_goodsinfo g','c.goodsid = g.goodsid')
+        ->where('c.userid ='.$userid)
+        ->field('sum(c.num*g.price) as total')
+        ->select();
+
+        if($result)
+        {
+            // return true;
+            return json(['num'=>$num,'cartid'=>$cartid,'price'=>$price['price'],'total'=>$total[0]['total']]);
+        }else{
+            return false;
+        }
 
     }
 
     //添加商品到购物车
     public function addToCart()
     {
-        
+        //接受购物车的cartid
+        $cartid = $_GET['cartid'];
+        //获取商品id
+        $goodsid = $_GET['goodsid'];
+        //获取加入购物车的商品数量
+        $num = $_GET['num'];
+        //获取用户id
+        $userid = 1;
+
+        //查询shop_cart表中是否已存在商品
+        $result = Db::name('cart')
+        ->where('cartid',$cartid)
+        ->find();
+
+        //如果存在则数量num加1，不存在则执行插入一条记录
+        if($result)
+        {
+            $r = Db::name('cart')
+            ->where('cartid',$cartid)
+            ->setInc('num',$num);
+        }else{
+            $data = ['num'=>$num,'goodsid'=>$goodsid,'userid'=>$userid];
+
+            $r = Db::name('cart')->insert($data);
+        }
+        //$r 获取执行插入或更新的结果
+        if($r==1){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     //显示购物车内容
     public function showCart()
     {
-        // return 111;
-        return $this->fetch('buycar');
+        //获取当前用户id
+        $userid = 1;
+
+        //根据用户id查询shop_cart和shop_goodsinfo表
+        $data = Db::table('shop_cart')
+        ->alias('c')
+        ->join('shop_goodsinfo g','c.goodsid = g.goodsid')
+        ->where('c.userid ='.$userid)
+        ->field('cartid,thumb,goods_name,price,num,price*num subtotal')
+        ->select();
+
+        //计算用户购物总价
+        $total = Db::table('shop_cart')
+        ->alias('c')
+        ->join('shop_goodsinfo g','c.goodsid = g.goodsid')
+        ->where('c.userid ='.$userid)
+        ->field('sum(c.num*g.price) as total')
+        ->select();
+
+        return $this->fetch('buycar',['data'=>$data,'total'=>$total[0]['total']]);
     }
 
     //统计商品数量进入订单确认页面
     public function account()
     {
+        //获取当前用户id
+        $userid = 1;
 
+        //根据用户id查询shop_cart和shop_goodsinfo表
+        $data = Db::table('shop_cart')
+        ->alias('c')
+        ->join('shop_goodsinfo g','c.goodsid = g.goodsid')
+        ->where('c.userid ='.$userid)
+        ->field('cartid,thumb,goods_name,num,num*price as subtotal')       
+        ->select();
+
+        //计算用户购物总价
+        $total = Db::table('shop_cart')
+        ->alias('c')
+        ->join('shop_goodsinfo g','c.goodsid = g.goodsid')
+        ->where('c.userid ='.$userid)
+        ->field('sum(c.num*g.price) as total')
+        ->select();
+
+        //获取地址信息
+        $addr = Db::name('addr')
+        ->alias('a')
+        ->join('user u','a.userid =u.userid')
+        ->where('a.userid',$userid)
+        ->order('a.ctime desc')
+        ->limit(1)
+        ->find();
+        // print_r($data);
+        // print_r($total);
+        print_r($addr);
+
+        //视图赋值
+        $this->assign('addr',$addr);
+        return $this->fetch('buycar_two',['data'=>$data,'total'=>$total[0]['total']]);
     }
 }
