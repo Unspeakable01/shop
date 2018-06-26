@@ -38,7 +38,6 @@ return [
         '__JS__' => '/static/admin/js',
         '__CSS__' => '/static/admin/css',
         '__IMAGE__' => '/static/admin/images',
-        '__FONT__' => '/static/admin/font',
-        '__AVATARS__' => '/static/admin/avatars',
+        '__KINDEDITOR__' => '/static/admin/editor',
     ]
 ];
