@@ -82,10 +82,8 @@
                             <ul class="featureUL">
                                
                                 {volist name='data' id='v'}
-                                <li class="featureBox">
-                                    <div class="box">
-                                    	<div class="h_icon"><img src="__IMAGE__/hot.png" width="50" height="50" /></div>
-                                        <div class="imgbg">
+
+
                                         	<a href="index/goods/showDetail/goodsid/{$v.goodsid}"><img src="__IMAGE__/{$v.thumb}" width="160" height="136" /></a>
                                         </div>                                        
                                         <div class="name">
@@ -99,8 +97,11 @@
                                         </div>
                                     </div>
                                 </li>
+
                                {/volist}
                                 
+
+
                             </ul>
                         </div>
                     </div>
@@ -111,8 +112,10 @@
         </div>
     </div>
     <!--Begin 限时特卖 Begin-->
+
 <!--    <div class="i_t mar_10">
         
+
     	<span class="fl">限时特卖</span>
         <span class="i_mores fr"><a href="#">更多</a></span>
     </div>
@@ -178,18 +181,22 @@
                 </div>
             </div>
         </div>
-    </div>-->
+    </div>
+
     <!--End 限时特卖 End-->
     <div class="content mar_20">
     	<img src="__IMAGE__/mban_1.jpg" width="1200" height="110" />
     </div>
 	<!--Begin 进口 生鲜 Begin-->
+
        
         {volist name='categorylist' id='v' key='k'}
       
     <div class="i_t mar_10">
-    	<span class="floor_num">{$k}F</span>
-    	<span class="fl">{$v[0]}</span>                
+    	<span class="floor_num">{$k}</span>
+    	<span class="fl">{$v[0]}</span>               
+
+
         <span class="i_mores fr"><a href="#">进口咖啡</a>&nbsp; &nbsp; &nbsp; <a href="#">进口酒</a>&nbsp; &nbsp; &nbsp; <a href="#">进口母婴</a>&nbsp; &nbsp; &nbsp; <a href="#">新鲜蔬菜</a>&nbsp; &nbsp; &nbsp; <a href="#">新鲜水果</a></span>
     </div>
     <div class="content">
@@ -212,7 +219,7 @@
             </div>
         </div>
         <div class="fresh_mid">
-           
+
             {volist name='v[1]' id='val'}
             
         	<ul>
@@ -227,6 +234,7 @@
             </ul>
             {/volist}
             
+
         </div>
         <div class="fresh_right">
         	<ul>
@@ -235,10 +243,12 @@
             </ul>
         </div>
     </div>    
+
         {/volist}
        
     <!--End 进口 生鲜 End-->
     
+
     <!--End 猜你喜欢 End-->
     
     

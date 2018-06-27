@@ -9,6 +9,7 @@
           {volist name='goodsinfo' id='v'}
         <div id="tsShopContainer">
             <div id="tsImgS"><a href="__IMAGE__/{$v.thumb}" title="Images" class="MagicZoom" id="MagicZoom"><img src="__IMAGE__/{$v.thumb}" width="390" height="390" /></a></div>
+
             <div id="tsPicContainer">
                 <div id="tsImgSArrL" onclick="tsScrollArrLeft()"></div>
                 <div id="tsImgSCon">
@@ -72,7 +73,9 @@
                     <input type="button" value="" onclick="addUpdate(jq(this));" class="n_btn_1" />
                     <input type="button" value="" onclick="jianUpdate(jq(this));" class="n_btn_2" />   
                 </div>
-                <span class="fl"><a onclick="ShowDiv_1('MyDiv1','fade1')"><img src="__IMAGE__/j_car.png" /></a></span>
+
+                <span class="fl"><a onclick="ShowDiv_1('MyDiv1','fade1',3,3)"><img src="__IMAGE__/j_car.png" /></a></span>
+
             </div>            
         </div>    
         
@@ -81,6 +84,7 @@
             <div class="s_brand_c"><a href="#">进入品牌专区</a></div>
         </div>    
         
+
         {/volist}
     </div>
     <div class="content mar_20">
@@ -203,12 +207,14 @@
             <div class="des_border" id="p_details">
                 <div class="des_t">商品详情</div>
                 <div class="des_con">
+
                        {$v.detail}
 <!--                	<table border="0" align="center" style="width:745px; font-size:14px; font-family:'宋体';" cellspacing="0" cellpadding="0">
                       <tr>
                         <td width="265"><img src="__IMAGE__/de1.jpg" width="206" height="412" /></td>
                         <td>
                          
+
                         	<b>迪奥真我香水(Q版)</b><br />
                             【商品规格】：5ml<br />
                             【商品质地】：液体<br />
@@ -219,17 +225,17 @@
                             【适用人群】：适合女性（都市白领，性感，有女人味的成熟女性）<br />
                         </td>
                       </tr>
-                    </table>
-                  
-                    <p align="center">
-                          
+                    </table>             
+                    <p align="center">                          
                     <img src="__IMAGE__/de2.jpg" width="746" height="425" /><br /><br />
                     <img src="__IMAGE__/de3.jpg" width="750" height="417" /><br /><br />
                     <img src="__IMAGE__/de4.jpg" width="750" height="409" /><br /><br />
                     <img src="__IMAGE__/de5.jpg" width="750" height="409" />
 					</p>
                     
+
                 </div>-->
+
           	</div>  
             
             <div class="des_border" id="p_comment">

@@ -52,10 +52,10 @@ class Goods extends Controller
       // return $this->fetch('goods/categorylist');
       
     }
-     //显示导航栏分类   
+
     public function category()
     {
-        
+        return $this->fetch('goods/category');
     }
 
 }

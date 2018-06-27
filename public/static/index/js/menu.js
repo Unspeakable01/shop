@@ -15,6 +15,7 @@ jQuery(function(){
 	)
 })
 
+
 function confirmgoods(){
    //alert(111);
     if(confirm('是否确认已收货')==true){
@@ -39,3 +40,4 @@ function delorder(){
     }
     
 }
+

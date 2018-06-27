@@ -1,7 +1,8 @@
- 
+{layout name='shopcart/layout_shopcart'}
 <div class="i_bg">  
     <div class="content mar_20">
-    	<img src="images/img1.jpg" />        
+    	<img src="__IMAGE__/img1.jpg" />        
+
     </div>
     
     <!--Begin 第一步：查看购物车 Begin -->
@@ -15,85 +16,75 @@
             <td class="car_th" width="140">返还积分</td>
             <td class="car_th" width="150">操作</td>
           </tr>
-          <tr>
-            <td>
-            	<div class="c_s_img"><img src="images/c_1.jpg" width="73" height="73" /></div>
-                Rio 锐澳 水蜜桃味白兰地鸡尾酒（预调酒） 275ml
-            </td>
-            <td align="center">颜色：灰色</td>
-            <td align="center">
-            	<div class="c_num">
-                    <input type="button" value="" onclick="jianUpdate1(jq(this));" class="car_btn_1" />
-                	<input type="text" value="1" name="" class="car_ipt" />  
-                    <input type="button" value="" onclick="addUpdate1(jq(this));" class="car_btn_2" />
-                </div>
-            </td>
-            <td align="center" style="color:#ff4e00;">￥620.00</td>
-            <td align="center">26R</td>
-            <td align="center"><a onclick="ShowDiv('MyDiv','fade')">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>
-          </tr>
-          <tr class="car_tr">
-            <td>
-            	<div class="c_s_img"><img src="images/c_2.jpg" width="73" height="73" /></div>
-                Rio 锐澳 水蜜桃味白兰地鸡尾酒（预调酒） 275ml
-            </td>
-            <td align="center">颜色：灰色</td>
-            <td align="center">
-            	<div class="c_num">
-                    <input type="button" value="" onclick="jianUpdate1(jq(this));" class="car_btn_1" />
-                	<input type="text" value="1" name="" class="car_ipt" />  
-                    <input type="button" value="" onclick="addUpdate1(jq(this));" class="car_btn_2" />
-                </div>
-            </td>
-            <td align="center" style="color:#ff4e00;">￥620.00</td>
-            <td align="center">26R</td>
-            <td align="center"><a href="#">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>
-          </tr>
-          <tr>
-            <td>
-            	<div class="c_s_img"><img src="images/c_3.jpg" width="73" height="73" /></div>
-                Rio 锐澳 水蜜桃味白兰地鸡尾酒（预调酒） 275ml
-            </td>
-            <td align="center">颜色：灰色</td>
-            <td align="center">
-            	<div class="c_num">
-                    <input type="button" value="" onclick="jianUpdate1(jq(this));" class="car_btn_1" />
-                	<input type="text" value="1" name="" class="car_ipt" />  
-                    <input type="button" value="" onclick="addUpdate1(jq(this));" class="car_btn_2" />
-                </div>
-            </td>
-            <td align="center" style="color:#ff4e00;">￥620.00</td>
-            <td align="center">26R</td>
-            <td align="center"><a href="#">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>
-          </tr>
-          <tr class="car_tr">
-            <td>
-            	<div class="c_s_img"><img src="images/c_4.jpg" width="73" height="73" /></div>
-                Rio 锐澳 水蜜桃味白兰地鸡尾酒（预调酒） 275ml
-            </td>
-            <td align="center">颜色：灰色</td>
-            <td align="center">
-            	<div class="c_num">
-                    <input type="button" value="" onclick="jianUpdate1(jq(this));" class="car_btn_1" />
-                	<input type="text" value="1" name="" class="car_ipt" />  
-                    <input type="button" value="" onclick="addUpdate1(jq(this));" class="car_btn_2" />
-                </div>
-            </td>
-            <td align="center" style="color:#ff4e00;">￥620.00</td>
-            <td align="center">26R</td>
-            <td align="center"><a href="#">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>
-          </tr>
-          <tr height="70">
-          	<td colspan="6" style="font-family:'Microsoft YaHei'; border-bottom:0;">
-            	<label class="r_rad"><input type="checkbox" name="clear" checked="checked" /></label><label class="r_txt">清空购物车</label>
-                <span class="fr">商品总价：<b style="font-size:22px; color:#ff4e00;">￥2899</b></span>
-            </td>
-          </tr>
-          <tr valign="top" height="150">
-          	<td colspan="6" align="right">
-            	<a href="#"><img src="images/buy1.gif" /></a>&nbsp; &nbsp; <a href="#"><img src="images/buy2.gif" /></a>
-            </td>
-          </tr>
+
+
+            {empty name="data"}
+             <tr>
+                <td colspan="6" align="center" style="font-family:'Microsoft YaHei';">购物车为空！</td>             
+            </tr>
+
+            {else /}
+            {volist name="data" id="vo"}
+            {if $i%2==0}
+            
+            <tr class="car_tr">
+                <td>
+                    <div class="c_s_img"><img src="__IMAGE__/{$vo.thumb}" width="73" height="73" /></div>
+                    {$vo.goods_name}
+                </td>
+                <td align="center">颜色：灰色</td>
+                <td align="center">
+                    <div class="c_num">
+                        <input type="button" value="" onclick="jianUpdate1(jq(this),{$vo.cartid});" class="car_btn_1" />
+                        <input type="text" value="{$vo.num}" name="" class="car_ipt"  onchange="add_sub_change({$vo.cartid},jq(this))"  />  
+                        <input type="button" value="" onclick="addUpdate1(jq(this),{$vo.cartid});" class="car_btn_2" />
+                    </div>
+                </td>
+                <td align="center" style="color:#ff4e00;" name="subtotal">￥{$vo.subtotal}</td>
+                <td align="center">26R</td>
+                <td align="center"><a href="javascript:void(0)" onclick="ShowDiv('MyDiv','fade',{$vo.cartid},jq(this))">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>
+            </tr>
+            {elseif $i%2!=0 /}
+            <tr>
+                <td>
+                    <div class="c_s_img"><img src="__IMAGE__/{$vo.thumb}" width="73" height="73" /></div>
+                    {$vo.goods_name}
+                </td>
+                <td align="center">颜色：灰色</td>
+                <td align="center">
+                    <div class="c_num">
+                        <input type="button" value="" onclick="jianUpdate1(jq(this),{$vo.cartid});" class="car_btn_1" />
+                        <input type="text" value="{$vo.num}" name="" class="car_ipt"  onchange="add_sub_change({$vo.cartid},jq(this))" />  
+                        <input type="button" value="" onclick="addUpdate1(jq(this),{$vo.cartid});" class="car_btn_2" />
+                    </div>
+                </td>
+                <td align="center" style="color:#ff4e00;" name='subtotal'>￥{$vo.subtotal}</td>
+                <td align="center">26R</td>
+                <td align="center"><a onclick="ShowDiv('MyDiv','fade',{$vo.cartid},jq(this))">删除</a>&nbsp; &nbsp;<a href="#">加入收藏</a></td>
+            </tr>
+                {/if}
+            {/volist}
+            <tr height="70">
+                    <td colspan="6" style="font-family:'Microsoft YaHei'; border-bottom:0;">
+                      <label class="r_rad"><input type="checkbox" name="clear" checked="checked" /></label><label class="r_txt">清空购物车</label>
+                      <span class="fr" name='total'>商品总价：<b style="font-size:22px; color:#ff4e00;">￥{$total}</b></span>
+                  </td>
+                </tr>
+
+                <tr valign="top" height="150">
+                        <td colspan="6" align="right">
+                          <a href="#"><img src="__IMAGE__/buy1.gif" /></a>&nbsp; &nbsp; 
+                          {empty name="data"}
+                          <a href="javascript:void(0)" name="sure"><img src="__IMAGE__/buy2.gif" class='gray' /></a>
+                          {else/}
+                          <a href="account" name="sure"><img src="__IMAGE__/buy2.gif" /></a>
+                          {/empty}
+                      </td>
+                    </tr>
+            {/empty}
+
+
+
         </table>
         
     </div>
@@ -105,7 +96,9 @@
     <div id="MyDiv" class="white_content">             
         <div class="white_d">
             <div class="notice_t">
-                <span class="fr" style="margin-top:10px; cursor:pointer;" onclick="CloseDiv('MyDiv','fade')"><img src="images/close.gif" /></span>
+
+                <span class="fr" style="margin-top:10px; cursor:pointer;" onclick="CloseDiv('MyDiv','fade')"><img src="__IMAGE__/close.gif" /></span>
+
             </div>
             <div class="notice_c">
            		
@@ -114,10 +107,11 @@
                     <td>您确定要把该商品移除购物车吗？</td>
                   </tr>
                   <tr height="50" valign="bottom">
-                    <td><a href="#" class="b_sure">确定</a><a href="#" class="b_buy">取消</a></td>
+
+                    <td><a href="javascript:void(0)" class="b_sure">确定</a><a href="javascript:void(0)" class="b_buy" onclick="CloseDiv('MyDiv','fade')">取消</a></td>
                   </tr>
                 </table>
-                    
+
             </div>
         </div>
     </div>    
