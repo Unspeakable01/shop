@@ -70,10 +70,10 @@ class Order extends Controller
         
     }
 
-    public function orderDetail()
-    {
-        return $this->fetch('order/member_order');
-    }
+//    public function orderDetail()
+//    {
+//        return $this->fetch('order/member_order');
+//    }
 
     public function checkOut()
     {
