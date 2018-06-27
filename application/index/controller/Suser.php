@@ -4,6 +4,7 @@ use think\Controller;
 use think\Db;
 use think\facade\Request;
 use app\index\model\User;
+use  think\facade\Session;
 class Suser extends Controller
 {
     //析构一个函数，下面的类都可以使用
@@ -49,6 +50,9 @@ class Suser extends Controller
             
         }elseif($paswd==$confirm){          
             $password=$this->shopuser->insert_to_shopuser($user,$paswd,$phone);
+            session::set('username',$user);            
+            session::set('password',$password);
+            session::set('phone',$phone);
             $this->success('注册成功', '/index/Index/index'); 
             
         }
@@ -57,22 +61,25 @@ class Suser extends Controller
     }
     
     //用户登录
-    public function login()
-    {   //判断是否为空，才可进入
+    public function login(){  
+        //判断是否为空，才可进入
         if(!empty($_POST['username']) && !empty($_POST['password'])){
         $user=Request::param('username');  
         //print_r($user);
         $paswd=Request::param('password');      
         //print_r($paswd);die;
-        $password=$this->shopuser->get_password_by_username($user) ;
+        $password=$this->shopuser->get_password_by_username($user);
         $password=\json_decode(json_encode($password),true);
 
         //print_r($password);
         if($password && ($password[0]['password']==$paswd)){
             //session开始函数
-            session_start();
-            $_SESSION['username']=$user;
-            $_SESSION['password']=$password[0]['password'];  
+            session::set('username',$user);            
+            session::set('password',$password[0]['password']);
+            //原生的session
+            //session_start();
+            //$_SESSION['username']=$user;
+            //$_SESSION['password']=$password[0]['password'];  
 //            dump($_SESSION);
             $this->success('登录成功', '/index/Index/index');  
 //            $show_msg='登录成功';//提示信息
@@ -91,11 +98,40 @@ class Suser extends Controller
     }    return $this->fetch('login');//,['user'=>$user,'password'=>$paswd] 
     }
     
+    //修改密码
+    public function forgetpaswd(){
+        if(!empty($_POST['username']) && !empty($_POST['originpaswd']) && !empty($_POST['newpaswd'])){
+            $user=Request::param('username');  
+            //print_r($user);
+            $originpaswd=Request::param('originpaswd');      
+            //print_r($originpaswd);die;
+            $newpaswd=Request::param('newpaswd');
+            //查询数据库中的密码
+            $password=$this->shopuser->get_password_by_username($user) ;
+            //转为数组
+            $password=\json_decode(json_encode($password),true);
+            //print_r($password);die;
+            //输入的原始密码与数据库中密码相同，才可以更改
+            if($originpaswd == $password[0]['password']){
+                //将新密码写入
+                $this->shopuser->update_by_username($user,$newpaswd);
+                //写入session
+                session::set('username',$user);
+                //跳转
+                $this->success('修改成功,请重新登录', '/index/Suser/login'); 
+            }else{
+                $this->error('修改失败', '/index/Suser/login');
+            }
+        }
+        return $this->fetch('forgetpaswd');
+    }
     //用户退出
     public function logout(){
-        session_destroy();
+        //清除session
+        Session::clear();
+        //session::get('username');
         $this->success('退出成功', '/index/Index/index');
-        return $this->fetch('logout');
+        return $this->fetch('login');
     }
     
     
