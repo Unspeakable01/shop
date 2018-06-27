@@ -14,30 +14,67 @@
 <script charset="utf-8" src="__KINDEDITOR__/lang/zh-CN.js"></script>
 <script>
         KindEditor.ready(function(K) {
-                window.editor = K.create('#editor_id');
+                // window.editor = K.create('#editor_id');
+            var editor1 = K.create('textarea[name="content1"]', {
+            cssPath : '__KINDEDITOR__/plugins/code/prettify.css',
+            uploadJson : '__KINDEDITOR__/php/upload_json.php',
+            fileManagerJson : '__KINDEDITOR__/php/file_manager_json.php',
+            allowFileManager : true,
+            afterCreate : function() {
+              var self = this;
+              K.ctrl(document, 13, function() {
+                self.sync();
+                K('form[name=addgoods]')[0].submit();
+              });
+              K.ctrl(self.edit.doc, 13, function() {
+                self.sync();
+                K('form[name=addgoods]')[0].submit();
+              });
+            }
         });
-        html = editor.html();
-        editor.sync();
-        html = K('#editor_id').val();
+        prettyPrint();
+      });
+      // html = editor.html();
+      // editor.sync();
+      // html = K('#editor_id').val();
 </script>
 </head>
 <body>
 <div class="panel admin-panel">
   <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>增加内容</strong></div>
   <div class="body-content">
-    <form method="post" class="form-x" action="tips.html">  
+    <form method="post" class="form-x" name="addgoods"  action="/admin/goods/addgoods">  
       <div class="form-group">
         <div class="label">
-          <label>标题：</label>
+          <label>商品名称：</label>
         </div>
         <div class="field">
-          <input type="text" class="input w50" value="" name="title" data-validate="required:请输入标题" />
+          <input type="text" class="input w50" value="" name="goodsname" data-validate="required:请输入标题" />
           <div class="tips"></div>
         </div>
       </div>
-       
-      
-      
+      <div class="form-group">
+          <div class="label">
+            <label>商品价格：</label>
+          </div>
+          <div class="field">
+            <input type="text" class="input w50" value="" name="price" data-validate="required:请输入价格" />
+            <div class="tips"></div>
+          </div>
+        </div>
+        <div class="form-group">
+            <div class="label">
+                <label>缩略图片:</label>
+            </div>
+            <div class="field">
+              <!-- <input type="" name="" id="file" />  -->
+              <input type="file" class="input w50" name="file"/>
+              <div class="tips"></div>
+            </div>
+          </div>
+        
+        
+      <div class="form-group">
         <div class="form-group">
           <div class="label">
             <label>所属分类：</label>
@@ -56,11 +93,11 @@
 
       <div class="form-group">
         <div class="label">
-          <label>内容：</label>
+          <label>商品描述：</label>
         </div>
         <div class="field">
           <!-- <textarea name="content" class="input" style="height:450px; border:1px solid #ddd;"></textarea> -->
-          <textarea id="editor_id" name="content" style="width:700px;height:300px;">
+          <textarea id="editor_id" name="content1" style="width:700px;height:300px;">
               &lt;strong&gt;HTML内容&lt;/strong&gt;
               </textarea>
           <div class="tips"></div>
