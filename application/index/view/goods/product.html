@@ -1,12 +1,14 @@
 {layout name='goods/layout_product'}
 <div class="i_bg">
 	<div class="postion">
-    	<span class="fl">全部 > 美妆个护 > 香水 > 迪奥 > 迪奥真我香水</span>
+            <!--地址导航-->
+    	<span class="fl"></span>
     </div>    
     <div class="content">
-    	                    
+    	 
+          {volist name='goodsinfo' id='v'}
         <div id="tsShopContainer">
-            <div id="tsImgS"><a href="__IMAGE__/p_big.jpg" title="Images" class="MagicZoom" id="MagicZoom"><img src="__IMAGE__/p_big.jpg" width="390" height="390" /></a></div>
+            <div id="tsImgS"><a href="__IMAGE__/{$v.thumb}" title="Images" class="MagicZoom" id="MagicZoom"><img src="__IMAGE__/{$v.thumb}" width="390" height="390" /></a></div>
             <div id="tsPicContainer">
                 <div id="tsImgSArrL" onclick="tsScrollArrLeft()"></div>
                 <div id="tsImgSCon">
@@ -28,11 +30,11 @@
         
         <div class="pro_des">
         	<div class="des_name">
-            	<p>Dior/迪奥 真我香水EDP 克丽丝汀迪奥 全新 30ml</p>
-                “开业巨惠，北京专柜直供”，不光低价，“真”才靠谱！
+            	<p>{$v.goods_name}</p>
+               
             </div>
             <div class="des_price">
-            	本店价格：<b>￥589</b><br />
+            	本店价格：<b>￥{$v.price}</b><br />
                 消费积分：<span>28R</span>
             </div>
             <div class="des_choice">
@@ -79,7 +81,7 @@
             <div class="s_brand_c"><a href="#">进入品牌专区</a></div>
         </div>    
         
-        
+        {/volist}
     </div>
     <div class="content mar_20">
     	<div class="l_history">
@@ -201,10 +203,12 @@
             <div class="des_border" id="p_details">
                 <div class="des_t">商品详情</div>
                 <div class="des_con">
-                	<table border="0" align="center" style="width:745px; font-size:14px; font-family:'宋体';" cellspacing="0" cellpadding="0">
+                       {$v.detail}
+<!--                	<table border="0" align="center" style="width:745px; font-size:14px; font-family:'宋体';" cellspacing="0" cellpadding="0">
                       <tr>
                         <td width="265"><img src="__IMAGE__/de1.jpg" width="206" height="412" /></td>
                         <td>
+                         
                         	<b>迪奥真我香水(Q版)</b><br />
                             【商品规格】：5ml<br />
                             【商品质地】：液体<br />
@@ -216,15 +220,16 @@
                         </td>
                       </tr>
                     </table>
-                    
+                  
                     <p align="center">
+                          
                     <img src="__IMAGE__/de2.jpg" width="746" height="425" /><br /><br />
                     <img src="__IMAGE__/de3.jpg" width="750" height="417" /><br /><br />
                     <img src="__IMAGE__/de4.jpg" width="750" height="409" /><br /><br />
                     <img src="__IMAGE__/de5.jpg" width="750" height="409" />
 					</p>
                     
-                </div>
+                </div>-->
           	</div>  
             
             <div class="des_border" id="p_comment">
