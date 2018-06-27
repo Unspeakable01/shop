@@ -78,7 +78,12 @@
             </span>
             <!--End 所在收货地区 End-->
             <span class="fr">
-                <span class="fl">你好，请<a href="Login.html">登录</a>&nbsp; <a href="Regist.html" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="#">我的订单</a>&nbsp;|</span>
+                <span class="fl">
+                    
+                {if empty($Think.session.username)}你好，请<a href="/index/Suser/login" style="color:#ff4e00;">登录</a>
+                {else /}{$Think.session.username}已登录&nbsp;<a href="/index/Suser/logout" style="color:#ff4e00;">退出登录</a>   
+                {/if}
+                &nbsp; <a href="/index/Suser/register" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="#">我的订单</a>&nbsp;|</span>
                 <span class="ss">
                     <div class="ss_list">
                         <a href="#">收藏夹</a>
