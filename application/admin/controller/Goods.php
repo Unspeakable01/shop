@@ -3,7 +3,7 @@
 namespace app\admin\controller;
 
 use think\Controller;
-use think\facade\Request;
+use think\Request;
 use think\Db;
 //商品信息类
 
@@ -57,13 +57,11 @@ class Goods extends Controller
     //通过id删除和下架商品
         public function deleteGoodsById(Request $request)
     {
-        $id=Request::param('id');
+        $id=($request->id);
         $data= Db::table('shop_goodsinfo')->where('goodsid',$id)->delete();     
        //echo $data;
-        if($data==0){
             return 1;
         }
-    }
 
     //打开商品修改页面
     public function toModifyGoods(Request $request)
@@ -86,7 +84,7 @@ class Goods extends Controller
         //$thumb = ($request->file);
         $cid = ($request->cid);
         $detail = ($request->content1);
-         $info = $file->move('./static/index/images');
+         $info = $file->move('/static/index/images');
          //dump($info);
         $data =[
             'goodsid'=>null,
