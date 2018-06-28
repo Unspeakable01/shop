@@ -74,6 +74,12 @@ class Shopcart extends Controller
     public function removeById()
     {
 
+    }
+
+    //修改商品数量
+    public function modifyNumber()
+    {
+
         //从session中获取userid
         $this->userid = 1;
         
@@ -98,10 +104,9 @@ class Shopcart extends Controller
 
     }
 
-    //修改商品数量
-    public function modifyNumber()
+    //添加商品到购物车
+    public function addToCart()
     {
-
         //接受用户id
         $userid = 1;
         //接受购物车的cartid
@@ -142,8 +147,8 @@ class Shopcart extends Controller
 
     }
 
-    //添加商品到购物车
-    public function addToCart()
+    //显示购物车内容
+    public function showCart()
     {
 
         //接受购物车的cartid
@@ -180,9 +185,10 @@ class Shopcart extends Controller
 
     }
 
-    //显示购物车内容
-    public function showCart()
+    //统计商品数量进入订单确认页面
+    public function account()
     {
+
 
         // return 111;
         //return $this->fetch('buycar');
@@ -207,45 +213,5 @@ class Shopcart extends Controller
         ->select();
 
         return $this->fetch('buycar',['data'=>$data,'total'=>$total[0]['total']]);
-    }
-
-    //统计商品数量进入订单确认页面
-    public function account()
-    {
-
-        //获取当前用户id
-        $userid = 1;
-
-        //根据用户id查询shop_cart和shop_goodsinfo表
-        $data = Db::table('shop_cart')
-        ->alias('c')
-        ->join('shop_goodsinfo g','c.goodsid = g.goodsid')
-        ->where('c.userid ='.$userid)
-        ->field('cartid,thumb,goods_name,num,num*price as subtotal')       
-        ->select();
-
-        //计算用户购物总价
-        $total = Db::table('shop_cart')
-        ->alias('c')
-        ->join('shop_goodsinfo g','c.goodsid = g.goodsid')
-        ->where('c.userid ='.$userid)
-        ->field('sum(c.num*g.price) as total')
-        ->select();
-
-        //获取地址信息
-        $addr = Db::name('addr')
-        ->alias('a')
-        ->join('user u','a.userid =u.userid')
-        ->where('a.userid',$userid)
-        ->order('a.ctime desc')
-        ->limit(1)
-        ->find();
-        // print_r($data);
-        // print_r($total);
-        // print_r($addr);
-
-        //视图赋值
-        $this->assign('addr',$addr);
-        return $this->fetch('buycar_two',['data'=>$data,'total'=>$total[0]['total']]);
     }
 }

@@ -3,7 +3,11 @@
     <type>org.netbeans.modules.php.project</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/php-project/1">
+<<<<<<< HEAD
+            <name>shop</name>
+=======
             <name>think</name>
+>>>>>>> origin/dev
         </data>
     </configuration>
 </project>
