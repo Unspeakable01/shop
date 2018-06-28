@@ -13,6 +13,7 @@ public function get_password_by_username($username) {
         
     //$this指的是当前类指向的对象（实例化）
         }
+        //新增
 public function insert_to_shopuser($user,$paswd,$phone) {  
     $data = ['username' => $user, 'password' => $paswd, 'phone' => $phone];
     return $this->insert($data);

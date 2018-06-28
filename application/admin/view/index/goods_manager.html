@@ -32,45 +32,31 @@
       <td>
       <div class="button-group">
       <a type="button" class="button border-main" href="/admin/goods/tomodifygoods"><span class="icon-edit"></span>修改</a>
-       <a class="button border-red" href="/admin/index/deletegoodsbyId" onclick="return del(17)"><span class="icon-trash-o"></span> 删除</a>
+       <a class="button border-red" href="deletegoodsbyId" onclick="del(17)"><span class="icon-trash-o"></span> 删除</a>
       </div>
       </td>
     </tr> 
     
-       <tr>
-      <td>17</td>      
-      <td>是打分水电费第三方士大夫似的</td>  
-      <td>2017-09-12</td>      
-      <td>
-      <div class="button-group">
-      <a type="button" class="button border-main" href="/admin/goods/tomodifygoods"><span class="icon-edit"></span>修改</a>
-       <a class="button border-red" href="/admin/index/deletegoodsbyId" onclick="return del(17)"><span class="icon-trash-o"></span> 删除</a>
-      </div>
-      </td>
-    </tr> 
-	    <tr>
-      <td>17</td>      
-      <td>是打分水电费第三方士大夫似的</td>  
-      <td>2017-09-12</td>      
-      <td>
-      <div class="button-group">
-      <a type="button" class="button border-main" href="/admin/goods/tomodifygoods"><span class="icon-edit"></span>修改</a>
-       <a class="button border-red" href="/admin/index/deletegoodsbyId" onclick="return del(17)"><span class="icon-trash-o"></span> 删除</a>
-      </div>
-      </td>
-    </tr> 
-    
-    
+       
   </table>
 </div>
 <script>
 function del(id){
 	if(confirm("您确定要删除吗?")){
-		return true;
-	}else{
-		return false;
-	}
-}
+	$.get("/admin/Goods/deleteGoodsById",{id:id},function(data){
+
+       if(data===1){
+           window.location;
+           alert(成功);
+           
+       }else{
+           
+           alert(失败);
+       }
+        
+       
+});
+}}
 </script>
 
 </body></html>

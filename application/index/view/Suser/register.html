@@ -37,7 +37,8 @@
               <script>
                   function checkUsername(){
                      var username=$('#username').val();//获得所输入的用户名
-                    //alert(username);   //上传到服务器,注释不能紧接着
+                    //alert(username);   
+                    //上传到服务器,注释不能紧接着
                     $.get("/index/Suser/checkUsername",{user:username},function(data){                      
                       //alert(data); 
                       //接收返回值

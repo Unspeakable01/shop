@@ -3,8 +3,8 @@
 namespace app\admin\controller;
 
 use think\Controller;
-use think\Request;
-
+use think\facade\Request;
+use think\Db;
 //商品信息类
 
 class Goods extends Controller
@@ -34,7 +34,12 @@ class Goods extends Controller
     //通过id删除和下架商品
     public function deleteGoodsById()
     {
-
+        $id=Request::param('id');
+        $data= Db::table('shop_goodsinfo')->where('goodsid',$id)->delete();     
+       //echo $data;
+        if($data==0){
+            return 1;
+        }
     }
 
     //打开商品修改页面
