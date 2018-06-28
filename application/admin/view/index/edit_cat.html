@@ -21,7 +21,7 @@ function del(id){
 }
 </script>
 <div class="panel admin-panel margin-top">
-  <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>增加内容</strong></div>
+  <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>修改内容</strong></div>
   <div class="body-content">
     <form method="post" class="form-x" action="">   
       <input type="hidden" name="id"  value="" />  
@@ -40,10 +40,10 @@ function del(id){
 
       <div class="form-group">
         <div class="label">
-          <label>排序：</label>
+          <label>分类id：</label>
         </div>
         <div class="field">
-          <input type="text" class="input w50" name="sort" value="0"  data-validate="required:,number:排序必须为数字" />
+          <input type="text" class="input w50" name="sort" value=""  data-validate="required:,number:排序必须为数字" />
           <div class="tips"></div>
         </div>
       </div>

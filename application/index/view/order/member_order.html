@@ -56,13 +56,17 @@
                 </td>
               </tr>
               <tr>
-                <td colspan="4" align="right" style="font-family:'Microsoft YaHei';">
-                  <input type="button" value='确认收货' onclick="confirmgoods();">
-                  <input type="button" value='取消订单' onclick="delorder();">
-                </td>
-              </tr>
-              
-            </table>
+                  <td colspan="4" align="right" style="font-family:'Microsoft YaHei';">
+                      {if($v[0]['status']==0)}
+                      <input type="button" value='取消订单' onclick="delorder(this);">
+                      {elseif $v[0]['status']==1 /}
+                    <input type="button" value='确认收货' onclick="confirmgoods(this);">
+                    <input type="button" value='取消订单' onclick="delorder(this);">
+                      {/if}
+                  </td>
+                </tr>
+                
+              </table>
             {/volist}
             <!--订单-->
             

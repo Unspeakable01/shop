@@ -24,54 +24,23 @@
       <th>排序</th>     
       <th width="250">操作</th>
     </tr>
-   
+    
+    
+   {foreach($data as $k=>$v)}    
     <tr>
-      <td>17</td>      
-      <td>国内新闻</td>  
-      <td>1</td>      
+      <td>{$v.categoryid}</td>      
+      <td>{$v.category_name}</td>  
+      <td>1</td>
+         
       <td>
+          
       <div class="button-group">
       <a type="button" class="button border-main" href="editcategory"><span class="icon-edit"></span>修改</a>
-       <a class="button border-red" href="tips.html" onclick="return del(17)"><span class="icon-trash-o"></span> 删除</a>
+       <a class="button border-red" href="del" onclick="del({$v.categoryid})"><span class="icon-trash-o"></span> 删除</a>
       </div>
       </td>
     </tr> 
-    
-    <tr>
-      <td>17</td>      
-      <td>娱乐新闻</td>  
-      <td>1</td>      
-      <td>
-      <div class="button-group">
-      <a type="button" class="button border-main" href="editcategory"><span class="icon-edit"></span>修改</a>
-       <a class="button border-red" href="tips.html" onclick="return del(17)"><span class="icon-trash-o"></span> 删除</a>
-      </div>
-      </td>
-    </tr>  
-    
-    <tr>
-      <td>17</td>      
-      <td>财经新闻</td>  
-      <td>1</td>      
-      <td>
-      <div class="button-group">
-      <a type="button" class="button border-main" href="editcategory"><span class="icon-edit"></span>修改</a>
-       <a class="button border-red" href="tips.html" onclick="return del(17)"><span class="icon-trash-o"></span> 删除</a>
-      </div>
-      </td>
-    </tr>  
-    
-    <tr>
-      <td>17</td>      
-      <td>军事新闻</td>  
-      <td>1</td>      
-      <td>
-      <div class="button-group">
-      <a type="button" class="button border-main" href="editcategory"><span class="icon-edit"></span>修改</a>
-       <a class="button border-red" href="tips.html" onclick="return del(17)"><span class="icon-trash-o"></span> 删除</a>
-      </div>
-      </td>
-    </tr>  
+    {/foreach}  
     
     
     
@@ -79,11 +48,19 @@
 </div>
 <script>
 function del(id){
-	if(confirm("您确定要删除吗?")){
-		return true;
-	}else{
-		return false;
-	}
+    if(confirm("您确定要删除吗?")){
+    $.get("/admin/Categorya/del",{id:id},function(data){
+       
+       if(data==1){
+           window.location.reload();
+           alert(删除成功);        
+       } else{
+           alert(删除失败);
+       }
+       
+       
+});
+}
 }
 </script>
 

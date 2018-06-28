@@ -3,8 +3,8 @@
 namespace app\admin\controller;
 
 use think\Controller;
-use think\Request;
-
+use think\facade\Request;
+use think\Db;
 //商品信息类
 
 class Goods extends Controller
@@ -16,36 +16,89 @@ class Goods extends Controller
      */
     public function index()
     {
-        return $this->fetch('index/goods_manager');
+        $goodslist = Db::table('shop_goodsinfo')->select();
+        //dump($goodslist);
+        return $this->fetch('index/goods_manager',['goodslist'=>$goodslist]);
     }
 
     //显示添加页面
     public function toAdd()
     {
-        return $this->fetch('index/add');
+       $category = Db::table('shop_category')->select();
+       //dump($category);
+        return $this->fetch('index/add',['category'=>$category]);
     }
 
     //添加商品
-    public function addGoods()
+    public function addGoods(Request $request)
     {
+         $file = request()->file('afile') ;
+        $goodsname = ($request->goodsname);
+        $price = ($request->price);
+        //$thumb = ($request->file);
+        $cid = ($request->cid);
+        $detail = ($request->content1);
+         $info = $file->move('./static/index/images');
+         //dump($info);
+        $data =[
+            'goodsid'=>null,
+            'goods_name'=>$goodsname,
+            'thumb'=>$info->getSaveName(),
+            'price'=>$price,
+            'detail'=>$detail,
+            'categoryid'=>$cid
+        ] ;
+        
+        Db::table('shop_goodsinfo')->insert($data);
+        
 
     }
 
     //通过id删除和下架商品
-    public function deleteGoodsById()
+        public function deleteGoodsById(Request $request)
     {
-
+        $id=Request::param('id');
+        $data= Db::table('shop_goodsinfo')->where('goodsid',$id)->delete();     
+       //echo $data;
+        if($data==0){
+            return 1;
+        }
     }
 
     //打开商品修改页面
-    public function toModifyGoods()
+    public function toModifyGoods(Request $request)
     {
-        return $this->fetch('index/edit');
+          $goodsid = ($request->goodsid);
+       $category = Db::table('shop_category')->select();
+       $goodsinfo = Db::table('shop_goodsinfo')->where('goodsid',$goodsid)->select();
+       //dump($goodsinfo);
+        return $this->fetch('index/edit',['category'=>$category,'goodsinfo'=>$goodsinfo]);
     }
 
     //修改商品信息
-    public function modifyGoods()
+    public function modifyGoods(Request $request)
     {
+       $goodsid = ($request->goodsid);
+       $file = $request->file('afile') ;
+       //dump($file);die;
+        $goodsname = ($request->goodsname);
+        $price = ($request->price);
+        //$thumb = ($request->file);
+        $cid = ($request->cid);
+        $detail = ($request->content1);
+         $info = $file->move('./static/index/images');
+         //dump($info);
+        $data =[
+            'goodsid'=>null,
+            'goods_name'=>$goodsname,
+            'thumb'=>$info->getSaveName(),
+            'price'=>$price,
+            'detail'=>$detail,
+            'categoryid'=>$cid
+        ] ;
+        
+      Db::table('shop_goodsinfo')->where('goodsid',$goodsid)->update($data);
+        
 
     }
 

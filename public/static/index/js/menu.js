@@ -16,10 +16,10 @@ jQuery(function(){
 })
 
 
-function confirmgoods(){
+function confirmgoods(obj){
    //alert(111);
     if(confirm('是否确认已收货')==true){
-        var orderid = jq('#orderid').text();
+        var orderid = jq(obj).parent().parent().parent().find('td span[name=orderid]').text();
     jq.get('/index/order/confirmgoods',{orderid:orderid},function(data){
         //alert(data);
         if(data==1){
@@ -28,9 +28,9 @@ function confirmgoods(){
     });
     }
 }
-function delorder(){
+function delorder(obj){
     if(confirm('是否确定取消订单')==true){
-         var orderid = jq('#orderid').text();
+          var orderid = jq(obj).parent().parent().parent().find('td span[name=orderid]').text();
          jq.get('/index/order/delorder',{orderid:orderid},function(data){
         //alert(data);
         if(data==1){
@@ -39,5 +39,7 @@ function delorder(){
     });
     }
     
+       
+   
 }
 
