@@ -41,15 +41,16 @@
 </head>
 <body>
 <div class="panel admin-panel">
-  <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>增加内容</strong></div>
+  <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>修改商品</strong></div>
   <div class="body-content">
-    <form method="post" class="form-x" name="addgoods"  action="/admin/goods/addgoods">  
+      <?php  //dump($goodsinfo); ?>
+    <form method="post" class="form-x" name="addgoods"  action="/admin/goods/modifyGoods/goodsid/{$goodsinfo[0]['goodsid']}" enctype="multipart/form-data">  
       <div class="form-group">
         <div class="label">
           <label>商品名称：</label>
         </div>
         <div class="field">
-          <input type="text" class="input w50" value="" name="goodsname" data-validate="required:请输入标题" />
+          <input type="text" class="input w50" value="{$goodsinfo[0]['goods_name']}" name="goodsname" data-validate="required:请输入标题" />
           <div class="tips"></div>
         </div>
       </div>
@@ -58,7 +59,7 @@
             <label>商品价格：</label>
           </div>
           <div class="field">
-            <input type="text" class="input w50" value="" name="price" data-validate="required:请输入价格" />
+            <input type="text" class="input w50" value="{$goodsinfo[0]['price']}" name="price" data-validate="required:请输入价格" />
             <div class="tips"></div>
           </div>
         </div>
@@ -68,7 +69,7 @@
             </div>
             <div class="field">
               <!-- <input type="" name="" id="file" />  -->
-              <input type="file" class="input w50" name="file"/>
+              <input type="file" class="input w50" name="afile"/>
               <div class="tips"></div>
             </div>
           </div>
@@ -81,10 +82,15 @@
           </div>
           <div class="field">
             <select name="cid" class="input w50">
-              <option value="">国内新闻</option>
-              <option value="">娱乐新闻</option>
-              <option value="">财经新闻</option>
-              <option value="">体育新闻</option>
+             
+             {volist name='category' id='v'}
+             
+              <option 
+                  {if $goodsinfo[0]['categoryid']==$v.categoryid}
+                  selected='selected'
+                  {/if}
+                  value="">{$v.category_name}</option>
+             {/volist}
             </select>
             <div class="tips"></div>
           </div>
@@ -98,7 +104,7 @@
         <div class="field">
           <!-- <textarea name="content" class="input" style="height:450px; border:1px solid #ddd;"></textarea> -->
           <textarea id="editor_id" name="content1" style="width:700px;height:300px;">
-              &lt;strong&gt;HTML内容&lt;/strong&gt;
+              &lt;strong&gt;{$goodsinfo[0]['detail']}&lt;/strong&gt;
               </textarea>
           <div class="tips"></div>
         </div>
@@ -114,6 +120,7 @@
         <div class="field">
           <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
         </div>
+          
       </div>
     </form>
   </div>

@@ -92,6 +92,7 @@ class Order extends Controller
      //取消订单
      public function delorder(Request $request){
          $orderid = ($request->orderid);
+         
          Db::table('shop_order')->where('orderid',$orderid)->update(['status'=>2]);
          return 1;
      }

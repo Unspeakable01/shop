@@ -43,7 +43,7 @@
 <div class="panel admin-panel">
   <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>增加内容</strong></div>
   <div class="body-content">
-    <form method="post" class="form-x" name="addgoods"  action="/admin/goods/addgoods">  
+    <form method="post" class="form-x" name="addgoods"  enctype="multipart/form-data" action="/admin/goods/addgoods">  
       <div class="form-group">
         <div class="label">
           <label>商品名称：</label>
@@ -68,7 +68,7 @@
             </div>
             <div class="field">
               <!-- <input type="" name="" id="file" />  -->
-              <input type="file" class="input w50" name="file"/>
+              <input type="file" class="input w50" name="afile"/>
               <div class="tips"></div>
             </div>
           </div>
@@ -81,10 +81,9 @@
           </div>
           <div class="field">
             <select name="cid" class="input w50">
-              <option value="">国内新闻</option>
-              <option value="">娱乐新闻</option>
-              <option value="">财经新闻</option>
-              <option value="">体育新闻</option>
+                {volist name='category' id='v'}
+              <option value="{$v.categoryid}">{$v.category_name}</option>
+              {/volist}
             </select>
             <div class="tips"></div>
           </div>
@@ -98,7 +97,7 @@
         <div class="field">
           <!-- <textarea name="content" class="input" style="height:450px; border:1px solid #ddd;"></textarea> -->
           <textarea id="editor_id" name="content1" style="width:700px;height:300px;">
-              &lt;strong&gt;HTML内容&lt;/strong&gt;
+             
               </textarea>
           <div class="tips"></div>
         </div>
