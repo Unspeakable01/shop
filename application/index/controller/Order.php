@@ -36,12 +36,14 @@ class Order extends Base
                 $goods_res = Db::table('shop_goodsinfo')->where('goodsid',$val['goodsid'])->select();
                 //dump($goods_res);
                 // $orderlist[]=[$goods_res[0]['goods_name']];
-                $goods['thumb']=$goods_res[0]['thumb'];
-                 $goods['goodsname']=$goods_res[0]['goods_name'];
-                  $goods['price']=$goods_res[0]['price'];
-                   $goods['goodsnum']=$val['num'];
+                if (!empty($goods_res)) {
+                    $goods['thumb']=$goods_res[0]['thumb'];
+                    $goods['goodsname']=$goods_res[0]['goods_name'];
+                    $goods['price']=$goods_res[0]['price'];
+                    $goods['goodsnum']=$val['num'];
                     $goods['tal']=$val['num']*$goods_res[0]['price'];
                     $goodslist[] = $goods;
+                }
                 /*
                  $goods[] = [
                      'thumb'=>$goods_res[0]['thumb'],
