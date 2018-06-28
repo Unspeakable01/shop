@@ -4,7 +4,7 @@ use think\Controller;
 use think\Db;
 use think\Request;
 
-class Order extends Controller
+class Order extends Base
 {
     public function index()
     {
@@ -13,15 +13,16 @@ class Order extends Controller
 
     public function userQuery()
     {
+        $this->chkLogin();
         return $this->fetch('order/member_user');
     }
     public function orderDetail()
     {
-        $userid = 1;
+        //登录检验并从session中取$userid
+        $userid = $this->chkLogin();
         //根据用户id查订单表和地址表，查到该用户对应订单下的收货地址，获得地址和该用户下的订单id
         $data = Db::table('shop_order')->join('shop_addr','shop_order.addrid=shop_addr.addrid')
                 ->where('shop_order.userid',$userid)->select();
-//dump($data);
         $orderlist = [];
        
         foreach ($data as $v) {
@@ -59,7 +60,7 @@ class Order extends Controller
             }
              //$v[]=['goodslist'=>$goodslist,'goodsnum'=>$goodsnum,'price'=>$price,'tal'=>$tal,'thumb'=>$thumb];
                $v['goods']=$goodslist;
-            $orderlist[]=[$v];
+               $orderlist[]=[$v];
             
             
         }
@@ -69,11 +70,6 @@ class Order extends Controller
         return $this->fetch('order/member_order',['orderlist'=>$orderlist ]);
         
     }
-
-//    public function orderDetail()
-//    {
-//        return $this->fetch('order/member_order');
-//    }
 
     public function checkOut()
     {
@@ -85,12 +81,16 @@ class Order extends Controller
     }
     
      public function confirmgoods(Request $request){
+         //登录检验并从session中取$userid
+         $userid = $this->chkLogin();
          $orderid = ($request->orderid);
          Db::table('shop_order')->where('orderid',$orderid)->update(['status'=>3]);
          return 1;
      }
      //取消订单
      public function delorder(Request $request){
+         //登录检验并从session中取$userid
+         $userid = $this->chkLogin();
          $orderid = ($request->orderid);
          Db::table('shop_order')->where('orderid',$orderid)->update(['status'=>2]);
          return 1;

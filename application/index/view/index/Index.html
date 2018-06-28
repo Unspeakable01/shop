@@ -80,18 +80,18 @@
                     <div id="block">
                         <div id="botton-scroll">
                             <ul class="featureUL">
-                               
-                                {volist name='data' id='v'}
-
-
-                                        	<a href="index/goods/showDetail/goodsid/{$v.goodsid}"><img src="__IMAGE__/{$v.thumb}" width="160" height="136" /></a>
-                                        </div>                                        
-                                        <div class="name">
-                                        	<a href="/index/goods/showDetail/goodsid/{$v.goodsid}">
-                                            <h2>{$v.goods_name}</h2>
-                                         
-                                            </a>
-                                        </div>
+                                    {volist name='data' id='v'}
+                                    <li class="featureBox">
+                                            <div class="box">
+                                                <div class="h_icon"><img src="images/hot.png" width="50" height="50" /></div>
+                                                <div class="imgbg">
+                                                        <a href="/index/goods/showDetail/goodsid/{$v.goodsid}"><img src="__IMAGE__/{$v.thumb}" width="160" height="136" /></a>
+                                                </div>                                        
+                                                <div class="name">
+                                                        <a href="/index/goods/showDetail/goodsid/{$v.goodsid}">
+                                                        <h2>{$v.goods_name}</h2>                          
+                                                        </a>
+                                                </div>
                                         <div class="price">
                                             <font>￥<span>189</span></font> &nbsp; 26R
                                         </div>

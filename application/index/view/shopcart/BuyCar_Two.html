@@ -23,7 +23,6 @@
     <script type="text/javascript" src="__JS__/num.js">
     	var jq = jQuery.noConflict();
     </script>     
-    
     <script type="text/javascript" src="__JS__/shade.js"></script>
 
     
@@ -109,8 +108,13 @@
             </span>
         </span>
         <!--End 所在收货地区 End-->
+        
         <span class="fr">
-        	<span class="fl">你好，请<a href="Login.html">登录</a>&nbsp; <a href="Regist.html" style="color:#ff4e00;">免费注册</a>&nbsp;|&nbsp;<a href="#">我的订单</a>&nbsp;|</span>
+                <span class="fl">                    
+                {if empty($Think.session.username)}你好，请<a href="/index/Suser/login" style="color:#ff4e00;">登录</a> &nbsp; <a href="/index/Suser/register" style="color:#ff4e00;">免费注册</a>&nbsp;
+                {else /}{$Think.session.username}已登录&nbsp;<a href="/index/Suser/logout" style="color:#ff4e00;">退出登录</a>   
+                {/if}
+               |&nbsp;<a href="/index/order/orderdetail">我的订单</a>&nbsp;|</span>
         	<span class="ss">
             	<div class="ss_list">
                 	<a href="#">收藏夹</a>
@@ -160,7 +164,7 @@
 </div>
 <div class="top">
 
-    <div class="logo"><a href="Index.html"><img src="__IMAGE__/logo.png" /></a></div>
+    <div class="logo"><a href="/index/index/index"><img src="__IMAGE__/logo.png" /></a></div>
     <div class="search">
     	<form>
         	<input type="text" value="" class="s_ipt" />
@@ -172,10 +176,10 @@
     	<div class="car_t">购物车 [ <span>3</span> ]</div>
         <div class="car_bg">
        		<!--Begin 购物车未登录 Begin-->
-        	<div class="un_login">还未登录！<a href="Login.html" style="color:#ff4e00;">马上登录</a> 查看购物车！</div>
+        	<div class="un_login"><a href="/index/shopcart/index" style="color:#ff4e00;">查看购物车！</a> </div>
             <!--End 购物车未登录 End-->
             <!--Begin 购物车已登录 Begin-->
-            <ul class="cars">
+            <!-- <ul class="cars">
             	<li>
 
                 	<div class="img"><a href="#"><img src="__IMAGE__/car1.jpg" width="58" height="58" /></a></div>
@@ -200,7 +204,7 @@
                 </li>
             </ul>
             <div class="price_sum">共计&nbsp; <font color="#ff4e00">￥</font><span>1058</span></div>
-            <div class="price_a"><a href="#">去购物车结算</a></div>
+            <div class="price_a"><a href="#">去购物车结算</a></div> -->
             <!--End 购物车已登录 End-->
         </div>
     </div>
@@ -489,14 +493,10 @@
         </div>  
         <!--End 商品分类详情 End-->                                                     
     	<ul class="menu_r">                                                                                                                                               
-        	<li><a href="Index.html">首页</a></li>
-            <li><a href="Food.html">美食</a></li>
-            <li><a href="Fresh.html">生鲜</a></li>
-            <li><a href="HomeDecoration.html">家居</a></li>
-            <li><a href="SuitDress.html">女装</a></li>
-            <li><a href="MakeUp.html">美妆</a></li>
-            <li><a href="Digital.html">数码</a></li>
-            <li><a href="GroupBuying.html">团购</a></li>
+        	<<li><a href="/index/index/index">首页</a></li>
+            {volist name='category' id='v'}
+            <li><a href="/index/Goods/categoryList/categoryid/{$v.categoryid}">{$v.category_name}</a></li>
+            {/volist}
         </ul>
         <div class="m_ad">中秋送好礼！</div>
     </div>
@@ -504,6 +504,7 @@
 <!--End Menu End--> 
 <div class="i_bg">  
     <div class="content mar_20">
+        <img src="__IMAGE__/img2.jpg" />  
     </div>
     
     <!--Begin 第二步：确认订单信息 Begin -->
@@ -520,44 +521,8 @@
                 <td class="car_th" width="130">小计</td>
                 <td class="car_th" width="140">返还积分</td>
               </tr>
-            </table>
             
-            <div class="two_t">
-            	<span class="fr"><a href="#">修改</a></span>收货人信息
-            </div>
-            <table border="0" class="peo_tab" style="width:1110px;" cellspacing="0" cellpadding="0">
-              <tr>
-    	<img src="__IMAGE__/img2.jpg" />        
-                <td class="p_td" width="160">电子邮件</td>
-                <td width="395">12345678@qq.com</td>
-              </tr>
-              <tr>
-                <td class="p_td">详细信息</td>
-                <td class="p_td">邮政编码</td>
-                <td>6011111</td>
-              </tr>
-              <tr>
-                <td class="p_td">电话</td>
-                <td></td>
-                <td class="p_td">手机</td>
-              </tr>
-              <tr>
-                <td class="p_td">标志建筑</td>
-                <td></td>
-                <td class="p_td">最佳送货时间</td>
-                <td></td>
-              </tr>
-            </table>
-            
-            <table border="0" style="width:900px; margin-top:20px;" cellspacing="0" cellpadding="0">
-              <tr>
-                <td align="right">
-                	该订单完成后，您将获得 <font color="#ff4e00">1815</font> 积分 ，以及价值 <font color="#ff4e00">￥0.00</font> 的红包 <br />
-                </td>
-              </tr>
-              <tr height="70">
-                <td align="right">
-              {empty name="data"}
+             {empty name="data"}
              <tr>
                 <td rowspan="5">购物车为空！</td>             
             </tr>
@@ -595,4 +560,149 @@
                 </td>
             </tr>
             {/empty}
+            </table>
+            <div class="two_t">
+                    <span class="fr"><a href="#">修改</a></span>收货人信息
+                </div>
+                <table border="0" class="peo_tab" style="width:1110px;" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td class="p_td" width="160">收货人</td>
+                    <td width="395">{$addr.consigner}</td>
+                    <td class="p_td" width="160">电子邮件</td>
+                    <td width="395">12345678@qq.com</td>
+                  </tr>
+                  <tr>
+                    <td class="p_td">详细信息</td>
+                    <td>{$addr.addr}</td>
+                    <td class="p_td">邮政编码</td>
+                    <td>6011111</td>
+                  </tr>
+                  <tr>
+                    <td class="p_td">电话</td>
+                    <td></td>
+                    <td class="p_td">手机</td>
+                    <td>{$addr.phone}</td>
+                  </tr>
+                  <tr>
+                    <td class="p_td">标志建筑</td>
+                    <td></td>
+                    <td class="p_td">最佳送货时间</td>
+                    <td></td>
+                  </tr>
+                </table>
+                <table border="0" style="width:900px; margin-top:20px;" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td align="right">
+                              该订单完成后，您将获得 <font color="#ff4e00">1815</font> 积分 ，以及价值 <font color="#ff4e00">￥0.00</font> 的红包 <br />
+                              商品总价: <font color="#ff4e00">￥{$total}</font>  + 配送费用: <font color="#ff4e00">￥15.00</font>
+                          </td>
+                        </tr>
+                        <tr height="70">
+                          <td align="right">
+                              <b style="font-size:14px;">应付款金额：<span style="font-size:22px; color:#ff4e00;">￥{$total}</span></b>
+                          </td>
+                        </tr>
+                        <tr height="70">
+                          <td align="right"><a href="/index/shopcart/ordersure/addrid/{$addr.addrid}"><img src="__IMAGE__/btn_sure.gif" /></a></td>
+                        </tr>
+                      </table>
+          
+                
+            </div>
+        </div>
+        <!--End 第二步：确认订单信息 End-->
+        
+        
+        <!--Begin Footer Begin -->
+        <div class="b_btm_bg bg_color">
+            <div class="b_btm">
+                <table border="0" style="width:210px; height:62px; float:left; margin-left:75px; margin-top:30px;" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="72"><img src="__IMAGE__/b1.png" width="62" height="62" /></td>
+                    <td><h2>正品保障</h2>正品行货  放心购买</td>
+                  </tr>
+                </table>
+                <table border="0" style="width:210px; height:62px; float:left; margin-left:75px; margin-top:30px;" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="72"><img src="__IMAGE__/b2.png" width="62" height="62" /></td>
+                    <td><h2>满38包邮</h2>满38包邮 免运费</td>
+                  </tr>
+                </table>
+                <table border="0" style="width:210px; height:62px; float:left; margin-left:75px; margin-top:30px;" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="72"><img src="__IMAGE__/b3.png" width="62" height="62" /></td>
+                    <td><h2>天天低价</h2>天天低价 畅选无忧</td>
+                  </tr>
+                </table>
+                <table border="0" style="width:210px; height:62px; float:left; margin-left:75px; margin-top:30px;" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="72"><img src="__IMAGE__/b4.png" width="62" height="62" /></td>
+                    <td><h2>准时送达</h2>收货时间由你做主</td>
+                  </tr>
+                </table>
+            </div>
+        </div>
+        <div class="b_nav">
+            <dl>                                                                                            
+                <dt><a href="#">新手上路</a></dt>
+                <dd><a href="#">售后流程</a></dd>
+                <dd><a href="#">购物流程</a></dd>
+                <dd><a href="#">订购方式</a></dd>
+                <dd><a href="#">隐私声明</a></dd>
+                <dd><a href="#">推荐分享说明</a></dd>
+            </dl>
+            <dl>
+                <dt><a href="#">配送与支付</a></dt>
+                <dd><a href="#">货到付款区域</a></dd>
+                <dd><a href="#">配送支付查询</a></dd>
+                <dd><a href="#">支付方式说明</a></dd>
+            </dl>
+            <dl>
+                <dt><a href="#">会员中心</a></dt>
+                <dd><a href="#">资金管理</a></dd>
+                <dd><a href="#">我的收藏</a></dd>
+                <dd><a href="#">我的订单</a></dd>
+            </dl>
+            <dl>
+                <dt><a href="#">服务保证</a></dt>
+                <dd><a href="#">退换货原则</a></dd>
+                <dd><a href="#">售后服务保证</a></dd>
+                <dd><a href="#">产品质量保证</a></dd>
+            </dl>
+            <dl>
+                <dt><a href="#">联系我们</a></dt>
+                <dd><a href="#">网站故障报告</a></dd>
+                <dd><a href="#">购物咨询</a></dd>
+                <dd><a href="#">投诉与建议</a></dd>
+            </dl>
+            <div class="b_tel_bg">
+                <a href="#" class="b_sh1">新浪微博</a>            
+                <a href="#" class="b_sh2">腾讯微博</a>
+                <p>
+                服务热线：<br />
+                <span>400-123-4567</span>
+                </p>
+            </div>
+            <div class="b_er">
+                <div class="b_er_c"><img src="__IMAGE__/er.gif" width="118" height="118" /></div>
+                <img src="__IMAGE__/ss.png" />
+            </div>
+        </div>    
+        <div class="btmbg">
+            <div class="btm">
+                备案/许可证编号：蜀ICP备12009302号-1-www.dingguagua.com   Copyright © 2015-2018 尤洪商城网 All Rights Reserved. 复制必究 , Technical Support: Dgg Group <br />
+                <img src="__IMAGE__/b_1.gif" width="98" height="33" /><img src="__IMAGE__/b_2.gif" width="98" height="33" /><img src="__IMAGE__/b_3.gif" width="98" height="33" /><img src="__IMAGE__/b_4.gif" width="98" height="33" /><img src="__IMAGE__/b_5.gif" width="98" height="33" /><img src="__IMAGE__/b_6.gif" width="98" height="33" />
+            </div>    	
+        </div>
+        <!--End Footer End -->    
+    </div>
+    
+    </body>
+    
+    
+    <!--[if IE 6]>
+    <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+    <![endif]-->
+    </html>
+    
               
