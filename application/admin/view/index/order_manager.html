@@ -26,7 +26,7 @@
                   
                 <td width="20%">订单号:<span name='orderid' >{$v[0]['orderid']}</span></td>
                 <td width="25%">下单时间<span>:{$v[0]['ctime']}</span></td>
-                <td width="15%">订单总金额<span>:{$v[0]['tutal_price']}</span></td>
+                <td width="15%">订单总金额<span>:{$v[0]['total_price']}</span></td>
                 <td width="25%">订单状态<span>:<?php
                         if($v[0]['status']==0){
                         echo '未处理';
@@ -67,7 +67,7 @@
               {/volist}
               <tr>
                 <td colspan="4" align="right" style="font-family:'Microsoft YaHei';">
-                    商品总价：￥{$v[0]['tutal_price']} ； 返还积分 56R  
+                    商品总价：￥{$v[0]['total_price']} ； 返还积分 56R  
                 </td>
               </tr>
               <tr>
