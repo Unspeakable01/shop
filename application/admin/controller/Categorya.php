@@ -40,8 +40,14 @@ class Categorya extends Controller
        
         } return $this->fetch('index/add_cat');
     }
-    
-    
+    //展示修改分类界面
+    public function  showCategory(){
+        $categoryid = Request::param('categoryid');
+        $categoryname=$this->category->where('categoryid',$categoryid)->select();
+         // dump($categoryname);
+         return $this->fetch('index/edit_cat',['categoryname'=>$categoryname]);
+        
+    }
 
     //调用修改分类页面
     /*Category::where('news_id',1)->find();//只能用静态
@@ -53,13 +59,15 @@ class Categorya extends Controller
     public function editCategory()
     {
         $title=Request::param('title');
+        $categoryid = Request::param('categoryid');
+        
         //print_r($title);
-        $sort=Request::param('sort');
+       
         if(!empty($title)){
-            Db::name('Category')->update(['category_name' => $title,'categoryid'=>$sort]);
+            Db::name('Category')->where('categoryid',$categoryid)->update(['category_name' => $title]);
             
         }
-        return $this->fetch('index/edit_cat');
+       
     }
     //删除分类
     public function del(){

@@ -31,20 +31,22 @@ class Order extends Controller
         foreach ($data as $v) {
            //跟据订单该用户的订单编号查订单详情的到具体购买的商品id和购买数量
             $res = Db::table('shop_order_detail')->where('orderid',$v['orderid'])->select();
-           // dump($res);           
+            //dump($res);           
             $goods = [];
             $goodslist = [];
             foreach ($res as $val) {
                 //跟据该订单下的商品id查询具体的商品,得到商品名价格
                 $goods_res = Db::table('shop_goodsinfo')->where('goodsid',$val['goodsid'])->select();
                 //dump($goods_res);
-                // $orderlist[]=[$goods_res[0]['goods_name']];
+                 //$orderlist[]=[$goods_res[0]['goods_name']];
+                if(!empty($goods_res)){
                 $goods['thumb']=$goods_res[0]['thumb'];
                  $goods['goodsname']=$goods_res[0]['goods_name'];
                   $goods['price']=$goods_res[0]['price'];
                    $goods['goodsnum']=$val['num'];
                     $goods['tal']=$val['num']*$goods_res[0]['price'];
                     $goodslist[] = $goods;
+                }
                 
             }
              

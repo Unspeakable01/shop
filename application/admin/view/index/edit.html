@@ -44,7 +44,7 @@
   <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>修改商品</strong></div>
   <div class="body-content">
       <?php  //dump($goodsinfo); ?>
-    <form method="post" class="form-x" name="addgoods"  action="/admin/goods/modifyGoods/goodsid/{$goodsinfo[0]['goodsid']}" enctype="multipart/form-data">  
+    <form method="post" class="form-x" name="addgoods" enctype="multipart/form-data" action="/admin/goods/modifyGoods/goodsid/{$goodsinfo[0]['goodsid']}" >  
       <div class="form-group">
         <div class="label">
           <label>商品名称：</label>

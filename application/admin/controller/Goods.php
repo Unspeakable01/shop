@@ -38,7 +38,7 @@ class Goods extends Controller
         //$thumb = ($request->file);
         $cid = ($request->cid);
         $detail = ($request->content1);
-         $info = $file->move('./static/index/images');
+         $info = $file->move('/static/index/images');
          //dump($info);
         $data =[
             'goodsid'=>null,
@@ -77,6 +77,7 @@ class Goods extends Controller
     public function modifyGoods(Request $request)
     {
        $goodsid = ($request->goodsid);
+       $th = Db::name('goodsinfo')->where('goodsid',$goodsid)->field('thumb')->find();
        $file = $request->file('afile') ;
        //dump($file);die;
         $goodsname = ($request->goodsname);
@@ -84,12 +85,15 @@ class Goods extends Controller
         //$thumb = ($request->file);
         $cid = ($request->cid);
         $detail = ($request->content1);
+        $info='';
+        if($file){
          $info = $file->move('/static/index/images');
+        }
          //dump($info);
         $data =[
-            'goodsid'=>null,
+          
             'goods_name'=>$goodsname,
-            'thumb'=>$info->getSaveName(),
+            'thumb'=>$info?$info->getSaveName():$th['thumb'],
             'price'=>$price,
             'detail'=>$detail,
             'categoryid'=>$cid

@@ -23,14 +23,16 @@ function del(id){
 <div class="panel admin-panel margin-top">
   <div class="panel-head" id="add"><strong><span class="icon-pencil-square-o"></span>修改内容</strong></div>
   <div class="body-content">
-    <form method="post" class="form-x" action="">   
+      
+    <form method="post" class="form-x" action="/admin/categorya/editCategory/categoryid/{$categoryname[0]['categoryid']}">   
       <input type="hidden" name="id"  value="" />  
       <div class="form-group">
         <div class="label">
           <label>分类名称：</label>
         </div>
+        
         <div class="field">
-          <input type="text" class="input w50" name="title" value="" data-validate="required:请输入标题" />         
+          <input type="text" class="input w50" name="title" value="{$categoryname[0]['category_name']}" data-validate="required:请输入标题" />         
           <div class="tips"></div>
         </div>
       </div> 
@@ -38,15 +40,7 @@ function del(id){
           
 
 
-      <div class="form-group">
-        <div class="label">
-          <label>分类id：</label>
-        </div>
-        <div class="field">
-          <input type="text" class="input w50" name="sort" value=""  data-validate="required:,number:排序必须为数字" />
-          <div class="tips"></div>
-        </div>
-      </div>
+     
      <div class="form-group">
         <div class="label">
           <label></label>
