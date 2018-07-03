@@ -14,7 +14,27 @@
     <script type="text/javascript" src="__JS__/menu.js"></script>    
         
 	<script type="text/javascript" src="__JS__/select.js"></script>
-        
+	<script type="text/javascript" src="__JS__/layer.js"></script>
+    <script>
+        // layer.msg('hello'); 
+        function getLogMsg(log_num){
+            jq.get('/index/Order/getLogMsg',{logNum:log_num},function(data){
+                var strMsg = '';
+                var json_obj = data.showapi_res_body.data;
+                for(i in json_obj){
+                    strMsg += json_obj[i].time+'<br>';
+                    strMsg += json_obj[i].context+'<hr>';
+                }
+                layer.open({
+                    // type: 1, 
+                    area: '500px',
+                    title: '物流详情',
+                    content: strMsg//这里content是一个普通的String
+                },'json');
+            });
+        }
+      
+    </script>   
     
 <title>尤洪</title>
 </head>

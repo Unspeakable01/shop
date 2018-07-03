@@ -99,6 +99,32 @@ class Order extends Base
      }
      //添加收货地址
      
+     //查询物流信息
+     public function getLogMsg(){
+        header("Content-Type:text/html;charset=UTF-8");
+        date_default_timezone_set("PRC");
+        //物流接口相关数据
+        //应用id
+        $showapi_appid = '68704';
+        //获取物流单号
+        $nu = request()->param('logNum');
+        //物流公司
+        $com = 'yuantong';
+        //生成密钥用的参数
+        $showapi_secret = "05f00d15568446eabdc52c39161902c2";
 
+        $paramArr = array(
+            'showapi_appid'=> $showapi_appid,
+                'com'=> $com,
+                'nu'=> $nu
+            );
+       
+        //接口地址及参数
+        $param = createParam($paramArr,$showapi_secret); 
+        $url = 'http://route.showapi.com/64-19?'.$param;
+        
+        $data = file_get_contents($url);
 
+        return json_decode($data);
+     }
 }

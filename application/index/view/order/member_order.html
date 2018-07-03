@@ -31,6 +31,7 @@
                         ?></span></td>
                 <tr><td>收货人<span>:{$v[0]['consigner']}</span></td></tr>
                <tr><td>收货地址<span>:{$v[0]['addr']}</span></ta></tr>
+               <tr><td>物流单号<span>:<a href="javascript:void(0)" onclick="getLogMsg('{$v[0]['log_num']}')">{$v[0]['log_num']}</a></span></ta></tr>
               <tr>
                 <td class="car_th" width="550">商品名称</td>
                 <td class="car_th" width="140">单价</td>
@@ -73,6 +74,7 @@
             
         </div>
      </div>
+     
   
 
 	<!--End 用户中心 End--> 
