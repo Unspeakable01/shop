@@ -1,12 +1,23 @@
 <?php
 namespace app\index\controller;
+
 use think\Controller;
-class User extends Controller
+use think\Request;
+
+class User extends Base
 {
+    //user model对象
+    private $user;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->user = new \app\index\model\User();
+    }
     public function index()
     {
-        return '<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px;} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:) </h1><p> ThinkPHP V5.1<br/><span style="font-size:30px">12载初心不改（2006-2018） - 你值得信赖的PHP框架</span></p></div><script type="text/javascript" src="https://tajs.qq.com/stats?sId=64890268" charset="UTF-8"></script><script type="text/javascript" src="https://e.topthink.com/Public/static/client.js"></script><think id="eab4b9f840753f8e7"></think>';
-    }   
+        return '';
+    }
 
     public function toLogin()
     {
@@ -16,5 +27,49 @@ class User extends Controller
     public function toRegist()
     {
         return $this->fetch('regist');
+    }
+    //打开用户安全页面
+    public function memberSafe()
+    {
+        $this->chkLogin();
+        return $this->fetch('order/member_safe');
+    }
+
+    //邮箱绑定ajax
+    public function mailBind()
+    {
+        //登陆验证并获取登录id
+        $userid = $this->chkLogin();
+        //获取待绑定的邮箱地址
+        $mail = request()->param('mail');
+        //生成激活链接
+        $url = $this->user->creatMailUrl($userid);
+        //发送邮件
+        return $this->user->sendActiveMail($mail,$url,$userid);
+       
+    }
+
+    //邮箱激活
+    public function mailActive(){
+        $uid = $_GET['uid'];
+        $time = $_GET['time'];
+        //当前时间
+        $cur_time = time();
+        //用户签名
+        $sign = $_GET['sign'];
+        //服务端校验签名,返回结果为true 或者false
+        $res_sign = $this->user->chkSign($uid,$sign,$time);
+        if($res_sign){
+            if((int)$time>$cur_time){
+                $this->user->mailActive($uid);
+                echo "激活成功";
+            }else{
+                echo "激活链接已过期";
+            }
+        }else{
+            // echo ' '.$time;
+            echo "签名错误";
+        }
+
     }
 }

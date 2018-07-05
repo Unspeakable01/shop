@@ -11,6 +11,7 @@
 
 // 应用公共文件
 
+
 //服务端向另一个服务器发送请求
 function curlRequest($url, $data = '')
 {
