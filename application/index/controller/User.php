@@ -50,7 +50,7 @@ class User extends Base
     }
 
     //邮箱激活
-    public function mailActive(){
+    public function mailActive(){ 
         $uid = $_GET['uid'];
         $time = $_GET['time'];
         //当前时间
