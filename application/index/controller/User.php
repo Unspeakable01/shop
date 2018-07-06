@@ -67,7 +67,6 @@ class User extends Base
                 $this->error('激活链接已过期');
             }
         }else{
-            // echo ' '.$time;
             $this->error('签名错误');
         }
     }
