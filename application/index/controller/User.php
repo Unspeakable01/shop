@@ -62,14 +62,13 @@ class User extends Base
         if($res_sign){
             if((int)$time>$cur_time){
                 $this->user->mailActive($uid);
-                echo "激活成功";
+                $this->success('激活成功','user/membersafe');
             }else{
-                echo "激活链接已过期";
+                $this->error('激活链接已过期');
             }
         }else{
             // echo ' '.$time;
-            echo "签名错误";
+            $this->error('签名错误');
         }
-
     }
 }
